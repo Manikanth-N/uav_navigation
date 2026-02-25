@@ -3,6 +3,7 @@
 import threading
 from pymavlink import mavutil
 from pymavlink.dialects.v20 import common as mavlink2
+from .dispatcher import Dispatcher
 
 
 class MAVLinkConnection:
@@ -25,6 +26,8 @@ class MAVLinkConnection:
         self.system_id = None
         self.component_id = None
         self._running = False
+        self.dispatcher = Dispatcher()
+        self.param_cache = {}
 
     def connect(self):
         print(f"Connecting to {self.connection_string}...")
@@ -47,22 +50,40 @@ class MAVLinkConnection:
             if not msg:
                 continue
 
-            if msg.get_type() == "HEARTBEAT":
+            # Dispatch ALL messages
+            self.dispatcher.dispatch(msg)
+
+            msg_type = msg.get_type()
+
+            # -------------------------
+            # PARAMETER CACHE
+            # -------------------------
+            if msg_type == "PARAM_VALUE":
+                param_id = msg.param_id
+                if isinstance(param_id, bytes):
+                    param_id = param_id.decode()
+                param_id = param_id.strip('\x00')
+                self.param_cache[param_id] = msg.param_value
+
+            # -------------------------
+            # HEARTBEAT PROCESSING
+            # -------------------------
+            if msg_type == "HEARTBEAT":
 
                 if msg.get_srcSystem() != self.system_id:
                     continue
 
-                # ---- Armed ----
                 armed = bool(
                     msg.base_mode & mavlink2.MAV_MODE_FLAG_SAFETY_ARMED
                 )
+                
+                
+                # Update state
                 self.state.update("armed", armed)
 
-                # ---- Mode ----
                 mode_number = msg.custom_mode
                 mode_name = self.ARDUCOPTER_MODES.get(mode_number, "UNKNOWN")
                 self.state.update("mode", mode_name)
 
-                # ---- Flying ----
                 flying = msg.system_status == mavlink2.MAV_STATE_ACTIVE
                 self.state.update("flying", flying)

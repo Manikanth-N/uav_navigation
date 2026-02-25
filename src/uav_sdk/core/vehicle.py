@@ -1,8 +1,11 @@
 # src/uav_sdk/core/vehicle.py
+import time
 
 from pymavlink.dialects.v20 import common as mavlink2
+
 from .state import UAVState
 from .connection import MAVLinkConnection
+
 
 
 class UAV:
@@ -14,7 +17,11 @@ class UAV:
     def connect(self):
         self.connection.connect()
 
-         # Register callbacks
+        # Create modules AFTER connection is ready
+        from uav_sdk.modules.gimbal import Gimbal
+        self.gimbal = Gimbal(self)
+
+        # Register callbacks
         self.on("armed", self.on_arm)
         self.on("mode", self.on_mode)
         self.on("flying", self.on_flying)
@@ -105,3 +112,21 @@ class UAV:
             f"{self.COLORS['end']}"
         )
    
+    
+
+    def get_param(self, name, timeout=3):
+        self.connection.master.mav.param_request_read_send(
+            self.connection.system_id,
+            self.connection.component_id,
+            name.encode(),
+            -1
+        )
+
+        start = time.time()
+
+        while time.time() - start < timeout:
+            if name in self.connection.param_cache:
+                return self.connection.param_cache[name]
+            time.sleep(0.05)
+
+        return None
