@@ -64,7 +64,10 @@ class UAVDriver:
             self.plugin_loader.registry,
             self
         )
-        
+
+        # Protocol adapter (MAVLink, ROS2, etc.)
+        self.protocol_adapter = None
+
         self._initialized = False
         self._started = False
         
@@ -177,7 +180,43 @@ class UAVDriver:
             Dictionary mapping plugin names to instances
         """
         return self.plugin_manager.list_loaded_plugins()
-    
+
+    def set_protocol_adapter(self, adapter):
+        """Set a protocol adapter for the SDK.
+        
+        Args:
+            adapter: Instance implementing ProtocolInterface
+        """
+        self.protocol_adapter = adapter
+
+    async def connect_protocol(self) -> bool:
+        """Connect protocol adapter if configured."""
+        if self.protocol_adapter is None:
+            logger.error("No protocol adapter configured")
+            return False
+        return await self.protocol_adapter.connect()
+
+    async def disconnect_protocol(self) -> bool:
+        """Disconnect protocol adapter if configured."""
+        if self.protocol_adapter is None:
+            logger.error("No protocol adapter configured")
+            return False
+        return await self.protocol_adapter.disconnect()
+
+    async def send_protocol_message(self, msg) -> bool:
+        """Send a message through protocol adapter."""
+        if self.protocol_adapter is None:
+            logger.error("No protocol adapter configured")
+            return False
+        return await self.protocol_adapter.send(msg)
+
+    async def receive_protocol_message(self, timeout: float = 0.1):
+        """Receive a message from protocol adapter."""
+        if self.protocol_adapter is None:
+            logger.error("No protocol adapter configured")
+            return None
+        return await self.protocol_adapter.receive(timeout)
+
     # Convenience methods for event system
     def subscribe(self, event_name: str, callback):
         """Subscribe to an event.
