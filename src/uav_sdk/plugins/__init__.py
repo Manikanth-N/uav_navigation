@@ -16,6 +16,9 @@ from .loader import PluginLoader
 from .manager import PluginManager
 from .registry import PluginRegistry
 from .manifest import ManifestLoader, PluginManifest
+from .mavlink_plugin import MavlinkProtocolPlugin
+from .navigation.mission_planner import MissionPlannerPlugin
+from .control.autopilot import AutopilotPlugin
 
 __all__ = [
     "Plugin",
@@ -29,4 +32,5 @@ __all__ = [
     "PluginRegistry",
     "ManifestLoader",
     "PluginManifest",
+    "MavlinkProtocolPlugin",
 ]

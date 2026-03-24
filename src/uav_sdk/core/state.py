@@ -51,6 +51,11 @@ class VehicleState:
     has_gps: bool = False
     gps_status: int = 0  # 0=no fix, 1=2D fix, 2=3D fix, 3=RTK fix
     
+    # Mission/Navigation
+    mission_active: bool = False
+    mission_current_index: int = -1
+    mission_waypoints: List[Dict[str, Any]] = field(default_factory=list)
+    
     # Custom fields from plugins
     custom: Dict[str, Any] = field(default_factory=dict)
 

@@ -37,7 +37,7 @@ def test_protocol_interface_contract():
 
 @pytest.mark.asyncio
 async def test_mavlink_adapter_flow():
-    adapter = MavlinkAdapter()
+    adapter = MavlinkAdapter(config={"use_pymavlink": False})
     assert await adapter.connect()
     assert adapter.is_connected()
 
@@ -74,7 +74,7 @@ async def test_mavlink_adapter_tcp_connection():
     host, port = server.sockets[0].getsockname()[:2]
 
     try:
-        adapter = MavlinkAdapter(config={"connection": f"tcp://{host}:{port}"})
+        adapter = MavlinkAdapter(config={"connection": f"tcp://{host}:{port}", "use_pymavlink": False})
         assert await adapter.connect()
 
         assert await adapter.send("vehicle-connect\n")

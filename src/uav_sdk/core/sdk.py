@@ -252,6 +252,40 @@ class UAVDriver:
         """
         return self._started
 
+    async def load_plugin(self, plugin_class, config: Dict = None):
+        """Load a specific plugin class.
+        
+        Args:
+            plugin_class: Plugin class to instantiate
+            config: Plugin configuration
+            
+        Returns:
+            True if successful
+        """
+        config = config or {}
+        plugin_name = plugin_class.__name__
+        
+        # Create plugin instance
+        plugin_instance = plugin_class(config, self)
+        
+        # Register with manager
+        if not self.plugin_manager.register_plugin_instance(plugin_name, plugin_instance):
+            logger.error(f"Failed to register plugin {plugin_name}")
+            return False
+        
+        # Initialize plugin
+        if not await plugin_instance.initialize():
+            logger.error(f"Failed to initialize plugin {plugin_name}")
+            return False
+        
+        # Start plugin
+        if not await plugin_instance.start():
+            logger.error(f"Failed to start plugin {plugin_name}")
+            return False
+        
+        logger.info(f"Plugin {plugin_name} loaded and started")
+        return True
+
 
 # Factory function for convenience
 async def create_sdk(
