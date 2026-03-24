@@ -1,7 +1,6 @@
 # examples/test_keyboard_gimbal.py
 
 from uav_sdk.core.vehicle import UAV
-from pymavlink import mavutil
 import time
 import curses
 import math

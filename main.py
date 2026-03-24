@@ -1,4 +1,4 @@
-from uav.vehicle import UAV
+from uav_sdk.core.vehicle import UAV
 from pymavlink.dialects.v20 import common as mavlink2
 
 

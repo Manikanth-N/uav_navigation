@@ -1,0 +1,14 @@
+name: test_plugin
+version: 1.0.0
+author: Test Author
+description: Test plugin for unit testing
+type: test
+entry_point: test_module:TestPlugin
+dependencies: {}
+features:
+  - test_feature_1
+  - test_feature_2
+config:
+  test_param:
+    type: string
+    default: test_value

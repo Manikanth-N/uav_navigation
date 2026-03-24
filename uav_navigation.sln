@@ -1,0 +1,47 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gazebo_sim_env", "gazebo_sim_env", "{C9F195E8-CAF3-7866-481D-E931811DCFD1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{26C4E12C-DE7A-9FD0-6381-6E75FCED9008}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "python3.10", "python3.10", "{A733D59F-BAE5-6B12-26B2-9D2A94B18BAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "site-packages", "site-packages", "{2B71B9EE-1C12-C2EF-37F5-5F3D94F250AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pymavlink", "pymavlink", "{CDB21775-9ACB-7C13-5351-6E4CFEBB2938}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "generator", "generator", "{F8B445CF-D3CE-2622-C0EE-47F347D05D9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CS", "CS", "{ED5D16DC-5152-F045-6F2E-FC02EC78302F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAVLink", "gazebo_sim_env\lib\python3.10\site-packages\pymavlink\generator\CS\MAVLink.csproj", "{9E19749D-D893-15EF-7081-CFBA4FE22EFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E19749D-D893-15EF-7081-CFBA4FE22EFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E19749D-D893-15EF-7081-CFBA4FE22EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E19749D-D893-15EF-7081-CFBA4FE22EFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E19749D-D893-15EF-7081-CFBA4FE22EFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{26C4E12C-DE7A-9FD0-6381-6E75FCED9008} = {C9F195E8-CAF3-7866-481D-E931811DCFD1}
+		{A733D59F-BAE5-6B12-26B2-9D2A94B18BAC} = {26C4E12C-DE7A-9FD0-6381-6E75FCED9008}
+		{2B71B9EE-1C12-C2EF-37F5-5F3D94F250AD} = {A733D59F-BAE5-6B12-26B2-9D2A94B18BAC}
+		{CDB21775-9ACB-7C13-5351-6E4CFEBB2938} = {2B71B9EE-1C12-C2EF-37F5-5F3D94F250AD}
+		{F8B445CF-D3CE-2622-C0EE-47F347D05D9C} = {CDB21775-9ACB-7C13-5351-6E4CFEBB2938}
+		{ED5D16DC-5152-F045-6F2E-FC02EC78302F} = {F8B445CF-D3CE-2622-C0EE-47F347D05D9C}
+		{9E19749D-D893-15EF-7081-CFBA4FE22EFA} = {ED5D16DC-5152-F045-6F2E-FC02EC78302F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75AF6942-69E9-4642-AE35-91A07EDA628B}
+	EndGlobalSection
+EndGlobal
